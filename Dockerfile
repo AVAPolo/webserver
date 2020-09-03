@@ -61,6 +61,10 @@ RUN apk --no-cache add \
 
 RUN cp /usr/bin/php7 /usr/bin/php
 
+COPY php.ini /etc/php7/
+
+COPY index.php /app/public/
+
 # Add apache to run and configure
 RUN mkdir -p /run/apache2 \
     && sed -i "s/#LoadModule\ rewrite_module/LoadModule\ rewrite_module/" /etc/apache2/httpd.conf \
@@ -72,10 +76,6 @@ RUN mkdir -p /run/apache2 \
     && sed -i "s#/var/www/localhost/htdocs#/app/public#" /etc/apache2/httpd.conf \
     && printf "\n<Directory \"/app/public\">\n\tAllowOverride All\n</Directory>\n" >> /etc/apache2/httpd.conf
 
-COPY root /
-RUN chmod +x /start.sh
-
-HEALTHCHECK CMD curl --fail http://localhost/ || exit 1
-
 EXPOSE 80
-ENTRYPOINT ["/start.sh"]
+
+CMD [ "httpd", "-D",  "FOREGROUND" ]
