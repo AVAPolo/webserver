@@ -76,7 +76,7 @@ RUN mkdir -p /run/apache2 \
     && sed -i "s#/var/www/localhost/htdocs#/app/public#" /etc/apache2/httpd.conf \
     && printf "\n<Directory \"/app/public\">\n\tAllowOverride All\n</Directory>\n" >> /etc/apache2/httpd.conf
 
-RUN chown apache:apache -R /app/*
+RUN chown apache:apache -R /app
 
 EXPOSE 80
 
