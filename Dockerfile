@@ -53,6 +53,7 @@ RUN apk --no-cache add \
 	php7-fileinfo@php \
 	php7-pgsql@php \
 	php7-intl@php \
+	php7-opcache@php \
 	php7-simplexml@php
 
 RUN apk --no-cache add \
